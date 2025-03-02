@@ -37,9 +37,9 @@ def verify_dependencies():
 
 async def verify_ollama_models():
     required_models = [
-        "gemma:2b",
-        "gemma:2b-instruct",
-        "gemma:2b-instruct-q4_0"
+        "gemma2:2b",
+        "gemma2:2b-instruct-fp16",
+        "gemma2:2b-instruct-q2_K"
     ]
     model_status = []
     

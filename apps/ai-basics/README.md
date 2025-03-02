@@ -13,9 +13,9 @@ This directory contains the code and resources for the AI Basics workshop by Rav
 
 ### Required Ollama Models
 
-- gemma:2b (Base model)
-- gemma:2b-instruct (Instruction-tuned model)
-- gemma:2b-instruct-q4_0 (Quantized instruction-tuned model)
+- gemma2:2b (Base model)
+- gemma2:2b-instruct-fp16 (Instruction-tuned model with FP16 precision)
+- gemma2:2b-instruct-q2_K (Quantized instruction-tuned model)
 
 Note: The Gemma models require approximately 10GB of disk space.
 
@@ -30,9 +30,9 @@ Note: The Gemma models require approximately 10GB of disk space.
 2. Install Ollama models:
 
    ```bash
-   ollama pull gemma:2b
-   ollama pull gemma:2b-instruct
-   ollama pull gemma:2b-instruct-q4_0
+   ollama pull gemma2:2b
+   ollama pull gemma2:2b-instruct-fp16
+   ollama pull gemma2:2b-instruct-q2_K
    ```
 
 3. Verify your setup:
