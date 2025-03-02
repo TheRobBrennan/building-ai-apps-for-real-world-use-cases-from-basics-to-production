@@ -1,6 +1,6 @@
 {
   "name": "building-ai-apps-for-real-world-use-cases-from-basics-to-production",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "This project will explore getting started developing with [Python](https://www.python.org) as quickly as possible using [Visual Studio Code](https://code.visualstudio.com) and containers.",
   "scripts": {
     "setup": "clear && ./manage.sh setup",
