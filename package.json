@@ -1,6 +1,6 @@
 {
-  "name": "explore-python",
-  "version": "0.1.2",
+  "name": "building-ai-apps-for-real-world-use-cases-from-basics-to-production",
+  "version": "0.0.0",
   "description": "This project will explore getting started developing with [Python](https://www.python.org) as quickly as possible using [Visual Studio Code](https://code.visualstudio.com) and containers.",
   "scripts": {
     "setup": "clear && ./manage.sh setup",
@@ -20,12 +20,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/TheRobBrennan/explore-python.git"
+    "url": "git+https://github.com/TheRobBrennan/building-ai-apps-for-real-world-use-cases-from-basics-to-production.git"
   },
   "author": "Rob Brennan <rob@sploosh.ai>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/TheRobBrennan/explore-python/issues"
+    "url": "https://github.com/TheRobBrennan/building-ai-apps-for-real-world-use-cases-from-basics-to-production/issues"
   },
-  "homepage": "https://github.com/TheRobBrennan/explore-python#readme"
+  "homepage": "https://github.com/TheRobBrennan/building-ai-apps-for-real-world-use-cases-from-basics-to-production#readme"
 }
