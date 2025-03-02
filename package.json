@@ -19,8 +19,8 @@
     "test:workflows:merge": "act push -e .github/test-data/pr-events/merge.json -W .github/workflows/main-merge.yml --container-architecture linux/amd64",
     "docker:build": "cd apps/ai-basics && docker-compose build",
     "docker:start": "cd apps/ai-basics && docker-compose up app",
-    "docker:test": "cd apps/ai-basics && docker-compose run test",
-    "docker:test:coverage": "cd apps/ai-basics && docker-compose run test pytest --cov=. --cov-config=.coveragerc --cov-report=html",
+    "docker:test": "cd apps/ai-basics && docker-compose run --rm test",
+    "docker:test:coverage": "cd apps/ai-basics && docker-compose run --rm test pytest --cov=. --cov-config=.coveragerc --cov-report=html",
     "docker:clean": "cd apps/ai-basics && docker-compose down --rmi all --volumes --remove-orphans"
   },
   "repository": {

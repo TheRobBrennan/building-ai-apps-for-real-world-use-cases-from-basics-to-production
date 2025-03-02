@@ -14,7 +14,7 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Install test dependencies
-RUN pip install pytest pytest-cov
+RUN pip install pytest pytest-cov pytest-asyncio
 
 # Copy the rest of the application
 COPY . .
