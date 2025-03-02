@@ -2,6 +2,8 @@
 Quick verification of required packages for AI Basics workshop.
 This is a temporary file that will be replaced during the workshop.
 """
+import asyncio
+import sys
 
 def verify_dependencies():
     packages = []
@@ -33,25 +35,69 @@ def verify_dependencies():
     
     return packages
 
+async def verify_ollama_models():
+    required_models = [
+        "gemma:2b",
+        "gemma:2b-instruct-fp16",
+        "gemma:2b-instruct-q2_K"
+    ]
+    model_status = []
+    
+    try:
+        import ollama
+        for model in required_models:
+            try:
+                # Check if model exists locally
+                await ollama.show(model)
+                model_status.append((model, "installed"))
+            except Exception:
+                model_status.append((model, "NOT FOUND"))
+    except ImportError:
+        # If ollama package isn't installed, mark all models as not found
+        for model in required_models:
+            model_status.append((model, "NOT FOUND"))
+    
+    return model_status
+
 def main():
     print("\n" + "="*50)
     print("AI Basics Workshop - Package Verification")
     print("="*50 + "\n")
     
+    # Check package dependencies
+    print("Checking required packages...")
     packages = verify_dependencies()
     
-    all_found = True
+    all_packages_found = True
     for package, version in packages:
         status = "✅" if version != "NOT FOUND" else "❌"
         print(f"{status} {package}: {version}")
         if version == "NOT FOUND":
-            all_found = False
+            all_packages_found = False
     
-    if all_found:
-        print("\n✨ All required packages are installed!")
+    # Check Ollama models
+    print("\nChecking required Ollama models...")
+    model_status = asyncio.run(verify_ollama_models())
+    
+    all_models_found = True
+    for model, status in model_status:
+        icon = "✅" if status == "installed" else "❌"
+        print(f"{icon} {model}")
+        if status != "installed":
+            all_models_found = False
+    
+    # Print summary
+    if all_packages_found and all_models_found:
+        print("\n✨ All requirements are satisfied!")
     else:
-        print("\n⚠️  Some packages are missing. Please run:")
-        print("pip install -r requirements.txt")
+        print("\n⚠️  Some requirements are missing:")
+        if not all_packages_found:
+            print("- Install missing packages: pip install -r requirements.txt")
+        if not all_models_found:
+            print("- Install missing models:")
+            for model, status in model_status:
+                if status != "installed":
+                    print(f"  ollama pull {model}")
     
     print("\n" + "="*50 + "\n")
 
