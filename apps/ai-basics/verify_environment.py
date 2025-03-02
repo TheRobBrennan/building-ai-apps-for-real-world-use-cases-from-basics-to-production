@@ -38,22 +38,29 @@ def verify_dependencies():
 async def verify_ollama_models():
     required_models = [
         "gemma:2b",
-        "gemma:2b-instruct-fp16",
-        "gemma:2b-instruct-q2_K"
+        "gemma:2b-instruct",
+        "gemma:2b-instruct-q4_0"
     ]
     model_status = []
     
     try:
         import ollama
+        # Get list of installed models
+        models = ollama.list()
+        installed_models = [model.model for model in models.models]
+        
         for model in required_models:
-            try:
-                # Check if model exists locally
-                await ollama.show(model)
+            if model in installed_models:
                 model_status.append((model, "installed"))
-            except Exception:
+            else:
                 model_status.append((model, "NOT FOUND"))
     except ImportError:
         # If ollama package isn't installed, mark all models as not found
+        for model in required_models:
+            model_status.append((model, "NOT FOUND"))
+    except Exception as e:
+        # If we can't get the model list, mark all as not found
+        print(f"\nWarning: Could not check Ollama models: {str(e)}")
         for model in required_models:
             model_status.append((model, "NOT FOUND"))
     
