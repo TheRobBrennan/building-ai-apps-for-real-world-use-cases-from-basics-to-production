@@ -47,7 +47,7 @@ Note: The Gemma models require approximately 10GB of disk space.
 
 #### Successful Environment Check
 
-```
+```console
 ==================================================
 AI Basics Workshop - Package Verification
 ==================================================
@@ -70,7 +70,7 @@ Checking required Ollama models...
 
 #### Missing Dependencies Example
 
-```
+```console
 ==================================================
 AI Basics Workshop - Package Verification
 ==================================================
