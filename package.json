@@ -20,7 +20,7 @@
     "docker:build": "cd apps/ai-basics && docker-compose build",
     "docker:start": "cd apps/ai-basics && docker-compose up app",
     "docker:test": "cd apps/ai-basics && docker-compose run --rm test",
-    "docker:test:coverage": "cd apps/ai-basics && docker-compose run --rm test pytest --cov=. --cov-config=.coveragerc --cov-report=html",
+    "docker:test:coverage": "cd apps/ai-basics && docker-compose run --rm test-coverage",
     "docker:clean": "cd apps/ai-basics && docker-compose down --rmi all --volumes --remove-orphans"
   },
   "repository": {

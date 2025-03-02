@@ -1,18 +1,12 @@
-version: '3.8'
-
 services:
   app:
     build: .
-    volumes:
-      - .:/app
-    environment:
-      - PYTHONPATH=/app
-    command: python verify_environment.py
+    entrypoint: python verify_environment.py
 
   test:
     build: .
-    volumes:
-      - .:/app
-    environment:
-      - PYTHONPATH=/app
-    command: pytest --cov=. --cov-config=.coveragerc
+    entrypoint: pytest
+
+  test-coverage:
+    build: .
+    entrypoint: pytest --cov=. --cov-config=.coveragerc
