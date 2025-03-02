@@ -1,7 +1,9 @@
 {
   "cSpell.words": [
     "asyncio",
+    "autouse",
     "Bowne",
+    "capsys",
     "coveragerc",
     "devcontainer",
     "devcontainers",
@@ -14,8 +16,10 @@
     "myscript",
     "numpy",
     "ollama",
+    "pycache",
     "pyplot",
     "pytest",
+    "repr",
     "savefig",
     "simplejson",
     "venv"
