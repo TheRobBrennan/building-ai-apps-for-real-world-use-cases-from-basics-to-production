@@ -2,7 +2,7 @@
 Tests for verify_environment.py
 """
 import pytest
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch, MagicMock, PropertyMock
 import sys
 
 # Create mock modules
@@ -134,6 +134,48 @@ def test_verify_dependencies_not_found():
         assert len(packages) == 4
         assert all(version == "NOT FOUND" for _, version in packages)
 
+def test_verify_dependencies_jupyter_not_found():
+    """Test when jupyter_core specifically is not found"""
+    with patch.dict(sys.modules, {
+        'numpy': numpy_mock,
+        'ollama': ollama_mock,
+        'gradio': gradio_mock,
+        'jupyter_core': None
+    }):
+        packages = verify_environment.verify_dependencies()
+        assert len(packages) == 4
+        assert any(pkg == "jupyter" and ver == "NOT FOUND" for pkg, ver in packages)
+
+def test_verify_dependencies_jupyter_import_error():
+    """Test when jupyter_core raises ImportError"""
+    mock_jupyter = MagicMock()
+    # Make __version__ raise ImportError when accessed
+    type(mock_jupyter).__version__ = PropertyMock(side_effect=ImportError())
+    
+    with patch.dict(sys.modules, {
+        'numpy': numpy_mock,
+        'ollama': ollama_mock,
+        'gradio': gradio_mock,
+        'jupyter_core': mock_jupyter
+    }):
+        packages = verify_environment.verify_dependencies()
+        assert len(packages) == 4
+        assert any(pkg == "jupyter" and ver == "NOT FOUND" for pkg, ver in packages)
+
+def test_main_execution():
+    """Test direct script execution"""
+    # Save the original __name__
+    original_name = verify_environment.__name__
+    try:
+        # Set __name__ to '__main__' to simulate direct script execution
+        verify_environment.__name__ = '__main__'
+        # Re-execute the main block
+        if verify_environment.__name__ == '__main__':
+            verify_environment.main()
+    finally:
+        # Restore the original __name__
+        verify_environment.__name__ = original_name
+
 def test_main_function(capsys, mock_packages):
     """Test the main function output"""
     # Create mock response for ollama.list()
@@ -156,7 +198,31 @@ def test_main_function(capsys, mock_packages):
     verify_environment.main()
     captured = capsys.readouterr()
     
+    # Test success path
     assert "AI Basics Workshop - Package Verification" in captured.out
     assert "Checking required packages..." in captured.out
     assert "Checking required Ollama models..." in captured.out
- 
+    assert "✨ All requirements are satisfied!" in captured.out
+    
+    # Test missing packages path
+    with patch.dict(sys.modules, {
+        'numpy': None,
+        'ollama': ollama_mock,
+        'gradio': gradio_mock,
+        'jupyter_core': jupyter_core_mock
+    }):
+        verify_environment.main()
+        captured = capsys.readouterr()
+        assert "⚠️  Some requirements are missing:" in captured.out
+        assert "Install missing packages: pip install -r requirements.txt" in captured.out
+        assert "❌ numpy: NOT FOUND" in captured.out
+    
+    # Test missing models path
+    ollama_mock.list = MagicMock(side_effect=Exception("Test error"))
+    verify_environment.main()
+    captured = capsys.readouterr()
+    assert "⚠️  Some requirements are missing:" in captured.out
+    assert "Install missing models:" in captured.out
+    assert "ollama pull gemma2:2b" in captured.out
+    assert "ollama pull gemma2:2b-instruct-fp16" in captured.out
+    assert "ollama pull gemma2:2b-instruct-q2_K" in captured.out 
