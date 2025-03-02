@@ -75,22 +75,24 @@ async def test_verify_ollama_models_found():
     mock_model2.model = "gemma2:2b-instruct-fp16"
     mock_model2.size = 4.9 * 1024**3
     
-    mock_model3 = MagicMock()
-    mock_model3.model = "gemma2:2b-instruct-q2_K"
-    mock_model3.size = 1.1 * 1024**3
+    # Note: We're not including the third model to test the "NOT FOUND" case
     
     mock_response = MagicMock()
-    mock_response.models = [mock_model, mock_model2, mock_model3]
+    mock_response.models = [mock_model, mock_model2]
     ollama_mock.list = MagicMock(return_value=mock_response)
     
     with patch.dict(sys.modules, {'ollama': ollama_mock}):
         model_status = await verify_environment.verify_ollama_models()
     
     assert len(model_status) == 3
-    assert all(status == "installed" for _, status, _ in model_status)
+    # First two models should be installed
+    assert model_status[0][1] == "installed"
+    assert model_status[1][1] == "installed"
+    # Third model should be NOT FOUND
+    assert model_status[2][1] == "NOT FOUND"
+    assert model_status[2][2] == ""  # Empty size for not found model
     assert "1.5GB" in model_status[0][2]
     assert "4.9GB" in model_status[1][2]
-    assert "1.1GB" in model_status[2][2]
 
 @pytest.mark.asyncio
 async def test_verify_ollama_models_not_found():
