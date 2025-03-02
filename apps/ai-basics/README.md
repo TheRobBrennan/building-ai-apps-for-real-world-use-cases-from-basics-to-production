@@ -64,7 +64,7 @@ If you prefer using Docker, you'll need:
    npm run docker:clean
    ```
 
-### Local Setup
+### Local Development Steps
 
 1. Install dependencies:
 
@@ -88,9 +88,9 @@ If you prefer using Docker, you'll need:
 
    This will check that all required packages and models are properly installed.
 
-### Example Outputs
+## Example Outputs
 
-#### Successful Environment Check
+### Successful Verification
 
 ```console
 ==================================================
@@ -113,7 +113,7 @@ Checking required Ollama models...
 ==================================================
 ```
 
-#### Missing Dependencies Example
+### Missing Dependencies Example
 
 ```console
 ==================================================
@@ -147,7 +147,7 @@ Checking required Ollama models...
 - `requirements.txt` - Python package dependencies
 - Additional files will be added during the workshop
 
-## Troubleshooting
+## Troubleshooting Guide
 
 If the verification script shows missing requirements:
 
@@ -155,7 +155,7 @@ If the verification script shows missing requirements:
 2. For missing Ollama models: Run the `ollama pull` commands shown in the verification output
 3. Ensure Ollama is running on your system
 
-### Installation Times and Sizes
+### Installation Metrics
 
 Model installation times and sizes from a sample run:
 
