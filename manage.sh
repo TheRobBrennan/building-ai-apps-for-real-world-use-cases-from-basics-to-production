@@ -30,6 +30,9 @@ setup_venv() {
         # Upgrade pip
         pip install --upgrade pip
 
+        # Install test dependencies
+        pip install pytest pytest-cov
+
         # Install dependencies only if requirements.txt exists
         if [[ -f "requirements.txt" ]]; then
             pip install -r requirements.txt
@@ -65,15 +68,25 @@ run_tests() {
     # Activate the virtual environment
     source "$VENV_DIR/bin/activate"
 
-    # Check for coverage flag
-    if [[ "$1" == "--coverage" ]]; then
-        pytest --cov=. --cov-config=.coveragerc --cov-report=html && open htmlcov/index.html
+    # Check if there are any Python test files
+    if ls test_*.py 1> /dev/null 2>&1 || ls */test_*.py 1> /dev/null 2>&1; then
+        # Check for coverage flag
+        if [[ "$1" == "--coverage" ]]; then
+            pytest --cov=. --cov-config=.coveragerc --cov-report=html && open htmlcov/index.html
+        else
+            pytest
+        fi
     else
-        pytest
+        echo "No Python tests found in current directory."
     fi
 
     # Deactivate the virtual environment
     deactivate
+
+    # Return to root directory to run GitHub workflow tests
+    cd - > /dev/null
+    echo -e "\nRunning GitHub workflow tests..."
+    npm run test:github
 }
 
 # Function to destroy the virtual environment
