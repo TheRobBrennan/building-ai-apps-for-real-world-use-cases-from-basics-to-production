@@ -47,22 +47,23 @@ async def verify_ollama_models():
         import ollama
         # Get list of installed models
         models = ollama.list()
-        installed_models = [model.model for model in models.models]
+        installed_models = {model.model: model.size for model in models.models}
         
         for model in required_models:
             if model in installed_models:
-                model_status.append((model, "installed"))
+                size_gb = installed_models[model] / (1024**3)  # Convert bytes to GB
+                model_status.append((model, "installed", f"{size_gb:.1f}GB"))
             else:
-                model_status.append((model, "NOT FOUND"))
+                model_status.append((model, "NOT FOUND", ""))
     except ImportError:
         # If ollama package isn't installed, mark all models as not found
         for model in required_models:
-            model_status.append((model, "NOT FOUND"))
+            model_status.append((model, "NOT FOUND", ""))
     except Exception as e:
         # If we can't get the model list, mark all as not found
         print(f"\nWarning: Could not check Ollama models: {str(e)}")
         for model in required_models:
-            model_status.append((model, "NOT FOUND"))
+            model_status.append((model, "NOT FOUND", ""))
     
     return model_status
 
@@ -87,9 +88,10 @@ def main():
     model_status = asyncio.run(verify_ollama_models())
     
     all_models_found = True
-    for model, status in model_status:
+    for model, status, size in model_status:
         icon = "✅" if status == "installed" else "❌"
-        print(f"{icon} {model}")
+        size_info = f" ({size})" if size else ""
+        print(f"{icon} {model}{size_info}")
         if status != "installed":
             all_models_found = False
     
@@ -102,7 +104,7 @@ def main():
             print("- Install missing packages: pip install -r requirements.txt")
         if not all_models_found:
             print("- Install missing models:")
-            for model, status in model_status:
+            for model, status, _ in model_status:
                 if status != "installed":
                     print(f"  ollama pull {model}")
     
