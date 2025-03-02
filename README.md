@@ -1,3 +1,64 @@
+# Building AI Apps for Real World Use Cases
+
+This repository contains a collection of practical AI applications, starting from basics and progressing to production-ready implementations.
+
+## Current Projects
+
+### AI Basics
+
+Located in `apps/ai-basics/`, this project follows the tutorial by Ravin Kumar and Hugo Bowne Anderson, exploring the fundamentals of building AI applications.
+
+#### Prerequisites
+
+- [Ollama](https://ollama.com/) installed locally
+- Python 3.x
+- Virtual environment management (via `manage.sh`)
+
+#### Required Gemma Models
+
+You'll need to pull the following models:
+
+```bash
+ollama pull gemma2:2b
+ollama pull gemma2:2b-instruct-fp16
+ollama pull gemma2:2b-instruct-q2_K
+```
+
+Note: These models require approximately 10GB of disk space.
+
+#### Project Setup
+
+1. Clone this repository
+2. Create and activate the virtual environment:
+
+   ```bash
+   ./manage.sh setup
+   ```
+
+3. Install project dependencies:
+
+   ```bash
+   pip install -r apps/ai-basics/requirements.txt
+   ```
+
+4. Verify Ollama setup:
+
+   ```bash
+   ollama run gemma:2b
+   ```
+
+## Development Guidelines
+
+- **Version Control**: We use semantic versioning with automated version bumps
+- **Commit Signing**: All commits must be GPG signed
+- **Pull Requests**: PR titles must follow conventional commit format
+
+For detailed guidelines, see:
+
+- [Contributing Guidelines](./CONTRIBUTING.md)
+- [Testing Documentation](./.github/docs/TESTING.md)
+- [Repository Setup](./.github/docs/SETUP.md) (for maintainers)
+
 # Welcome
 
 This project will explore getting started developing with [Python](https://www.python.org) as quickly as possible using ~~[Visual Studio Code](https://code.visualstudio.com)~~ [Cursor](https://www.cursor.com).
@@ -208,15 +269,3 @@ The following test scripts are available:
    - Will show authentication errors locally (expected)
    - Tests workflow syntax and merge logic
    - Full functionality requires GitHub Actions environment
-
-## Development Guidelines
-
-- **Version Control**: We use semantic versioning with automated version bumps
-- **Commit Signing**: All commits must be GPG signed
-- **Pull Requests**: PR titles must follow conventional commit format
-
-For detailed guidelines, see:
-
-- [Contributing Guidelines](./CONTRIBUTING.md)
-- [Testing Documentation](./.github/docs/TESTING.md)
-- [Repository Setup](./.github/docs/SETUP.md) (for maintainers)
