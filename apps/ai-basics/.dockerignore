@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
+htmlcov/
+.venv/
+
+# IDE
+.vscode/
+*.code-workspace
+
+# Git
+.git/
+.gitignore
+
+# Node (for future-proofing)
+node_modules/
+
+# Environment files
+.env
+.env.* 

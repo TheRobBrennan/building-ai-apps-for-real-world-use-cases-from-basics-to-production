@@ -4,14 +4,18 @@ This directory contains the code and resources for the AI Basics workshop by Rav
 
 ## Prerequisites
 
-### Required Packages
+You can run this project either locally or using Docker.
+
+### Local Setup
+
+#### Required Packages
 
 - numpy
 - ollama
 - gradio
 - jupyter
 
-### Required Ollama Models
+#### Required Ollama Models
 
 - gemma2:2b (Base model)
 - gemma2:2b-instruct-fp16 (Instruction-tuned model with FP16 precision)
@@ -19,7 +23,48 @@ This directory contains the code and resources for the AI Basics workshop by Rav
 
 Note: The Gemma models require approximately 10GB of disk space.
 
+### Docker Setup
+
+If you prefer using Docker, you'll need:
+
+- Docker
+- Docker Compose
+
 ## Quick Start
+
+### Using Docker (Recommended)
+
+1. Build the Docker image:
+
+   ```bash
+   npm run docker:build
+   ```
+
+2. Run the application:
+
+   ```bash
+   npm run docker:start
+   ```
+
+3. Run tests:
+
+   ```bash
+   npm run docker:test
+   ```
+
+4. Run tests with coverage:
+
+   ```bash
+   npm run docker:test:coverage
+   ```
+
+5. Clean up Docker resources:
+
+   ```bash
+   npm run docker:clean
+   ```
+
+### Local Development Steps
 
 1. Install dependencies:
 
@@ -43,9 +88,9 @@ Note: The Gemma models require approximately 10GB of disk space.
 
    This will check that all required packages and models are properly installed.
 
-### Example Outputs
+## Example Outputs
 
-#### Successful Environment Check
+### Successful Verification
 
 ```console
 ==================================================
@@ -68,7 +113,7 @@ Checking required Ollama models...
 ==================================================
 ```
 
-#### Missing Dependencies Example
+### Missing Dependencies Example
 
 ```console
 ==================================================
@@ -102,7 +147,7 @@ Checking required Ollama models...
 - `requirements.txt` - Python package dependencies
 - Additional files will be added during the workshop
 
-## Troubleshooting
+## Troubleshooting Guide
 
 If the verification script shows missing requirements:
 
@@ -110,7 +155,7 @@ If the verification script shows missing requirements:
 2. For missing Ollama models: Run the `ollama pull` commands shown in the verification output
 3. Ensure Ollama is running on your system
 
-### Installation Times and Sizes
+### Installation Metrics
 
 Model installation times and sizes from a sample run:
 

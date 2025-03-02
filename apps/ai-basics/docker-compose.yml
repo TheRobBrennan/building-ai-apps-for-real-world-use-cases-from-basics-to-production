@@ -1,0 +1,12 @@
+services:
+  app:
+    build: .
+    entrypoint: python verify_environment.py
+
+  test:
+    build: .
+    entrypoint: pytest
+
+  test-coverage:
+    build: .
+    entrypoint: pytest --cov=. --cov-config=.coveragerc
