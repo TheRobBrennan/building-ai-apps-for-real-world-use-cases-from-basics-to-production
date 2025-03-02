@@ -10,9 +10,10 @@ Located in `apps/ai-basics/`, this project follows the tutorial by Ravin Kumar a
 
 #### Prerequisites
 
-- [Ollama](https://ollama.com/) installed locally
-- Python 3.x
-- Virtual environment management (via `manage.sh`)
+- [Ollama](https://ollama.com/) installed locally (for local setup)
+- Python 3.x (for local setup)
+- Virtual environment management (via `manage.sh`) (for local setup)
+- Docker and Docker Compose (for Docker setup)
 
 #### Required Gemma Models
 
@@ -28,7 +29,21 @@ Note: These models require approximately 10GB of disk space.
 
 ## Development Setup
 
-### Environment Management
+You can run this project either locally or using Docker.
+
+### Using Docker (Recommended)
+
+The following npm scripts are available for Docker-based development:
+
+- `npm run docker:build` - Build the Docker image
+- `npm run docker:start` - Run the application
+- `npm run docker:test` - Run tests in Docker
+- `npm run docker:test:coverage` - Run tests with coverage in Docker
+- `npm run docker:clean` - Clean up Docker resources
+
+### Local Setup
+
+#### Environment Management
 
 The `manage.sh` script provides several utility commands:
 
