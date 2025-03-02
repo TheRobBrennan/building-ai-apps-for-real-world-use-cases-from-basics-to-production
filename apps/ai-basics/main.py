@@ -26,16 +26,18 @@ def verify_dependencies():
         packages.append(("gradio", "NOT FOUND"))
     
     try:
-        import jupyter
-        packages.append(("jupyter", jupyter.__version__))
+        import jupyter_core
+        packages.append(("jupyter", jupyter_core.__version__))
     except ImportError:
         packages.append(("jupyter", "NOT FOUND"))
     
     return packages
 
 def main():
+    print("\n" + "="*50)
     print("AI Basics Workshop - Package Verification")
-    print("----------------------------------------")
+    print("="*50 + "\n")
+    
     packages = verify_dependencies()
     
     all_found = True
@@ -50,6 +52,8 @@ def main():
     else:
         print("\n⚠️  Some packages are missing. Please run:")
         print("pip install -r requirements.txt")
+    
+    print("\n" + "="*50 + "\n")
 
 if __name__ == "__main__":
     main() 
