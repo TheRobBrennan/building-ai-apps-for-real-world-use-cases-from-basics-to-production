@@ -9,8 +9,8 @@ RUN apt-get update && \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy requirements first for better caching
-COPY requirements.txt .
+# Copy requirements and config files first for better caching
+COPY requirements.txt pytest.ini ./
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Install test dependencies
