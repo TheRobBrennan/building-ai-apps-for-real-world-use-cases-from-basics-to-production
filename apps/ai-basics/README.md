@@ -38,14 +38,14 @@ Note: The Gemma models require approximately 10GB of disk space.
 3. Verify your setup:
 
    ```bash
-   python main.py
+   python verify_environment.py
    ```
 
    This will check that all required packages and models are properly installed.
 
 ## Project Structure
 
-- `main.py` - Temporary verification script (will be replaced during workshop)
+- `verify_environment.py` - Script to verify your local development environment
 - `requirements.txt` - Python package dependencies
 - Additional files will be added during the workshop
 
