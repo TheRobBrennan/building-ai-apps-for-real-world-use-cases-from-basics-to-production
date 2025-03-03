@@ -9,12 +9,20 @@ RUN apt-get update && \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
+# Install UV
+RUN pip install uv
+
+# Create virtual environment
+RUN uv venv /app/.venv
+
 # Copy requirements and config files first for better caching
 COPY requirements.txt pytest.ini ./
-RUN pip install --no-cache-dir -r requirements.txt
+
+# Install dependencies using UV
+RUN . .venv/bin/activate && uv pip install --no-cache -r requirements.txt
 
 # Install test dependencies
-RUN pip install pytest pytest-cov pytest-asyncio
+RUN . .venv/bin/activate && uv pip install --no-cache pytest pytest-cov pytest-asyncio
 
 # Copy the rest of the application
 COPY . .
@@ -22,6 +30,7 @@ COPY . .
 # Set environment variables
 ENV PYTHONUNBUFFERED=1
 ENV PYTHONDONTWRITEBYTECODE=1
+ENV PATH="/app/.venv/bin:$PATH"
 
 # Default command (can be overridden)
 CMD ["python", "verify_environment.py"] 
