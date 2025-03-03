@@ -8,7 +8,12 @@ You can run this project either locally or using Docker.
 
 ### Local Setup
 
-#### Required Packages
+#### Required Tools
+
+- UV (Python package manager)
+- Ollama (for running AI models locally)
+
+#### Required Python Packages
 
 - numpy
 - ollama
@@ -66,13 +71,32 @@ If you prefer using Docker, you'll need:
 
 ### Local Development Steps
 
-1. Install dependencies:
+1. Install UV:
 
    ```bash
-   pip install -r requirements.txt
+   pip install uv
    ```
 
-2. Install Ollama models:
+2. Create and activate a virtual environment:
+
+   ```bash
+   # Create environment
+   uv venv .venv
+
+   # Activate environment
+   # On macOS/Linux:
+   source .venv/bin/activate
+   # On Windows:
+   .venv\Scripts\activate
+   ```
+
+3. Install dependencies:
+
+   ```bash
+   uv pip install -r requirements.txt
+   ```
+
+4. Install Ollama models:
 
    ```bash
    ollama pull gemma2:2b
@@ -80,7 +104,7 @@ If you prefer using Docker, you'll need:
    ollama pull gemma2:2b-instruct-q2_K
    ```
 
-3. Verify your setup:
+5. Verify your setup:
 
    ```bash
    python verify_environment.py
