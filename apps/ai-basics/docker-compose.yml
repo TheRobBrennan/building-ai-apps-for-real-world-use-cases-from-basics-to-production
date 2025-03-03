@@ -1,12 +1,62 @@
 services:
+  ollama:
+    image: ollama/ollama:latest
+    volumes:
+      - ollama_data:/root/.ollama
+    network_mode: host
+    healthcheck:
+      test: [ "CMD", "pgrep", "ollama" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  init:
+    build: .
+    environment:
+      - workspaceFolder=/app
+      - PYTHONPATH=/app
+      - OLLAMA_HOST=http://localhost:11434
+    entrypoint: python init_ollama.py
+    network_mode: host
+    depends_on:
+      ollama:
+        condition: service_healthy
+
   app:
     build: .
+    environment:
+      - workspaceFolder=/app
+      - PYTHONPATH=/app
+      - OLLAMA_HOST=http://localhost:11434
+    network_mode: host
     entrypoint: python verify_environment.py
+    depends_on:
+      init:
+        condition: service_completed_successfully
 
   test:
     build: .
+    environment:
+      - workspaceFolder=/app
+      - PYTHONPATH=/app
+      - OLLAMA_HOST=http://localhost:11434
+    network_mode: host
     entrypoint: pytest
+    depends_on:
+      init:
+        condition: service_completed_successfully
 
   test-coverage:
     build: .
+    environment:
+      - workspaceFolder=/app
+      - PYTHONPATH=/app
+      - OLLAMA_HOST=http://localhost:11434
+    network_mode: host
     entrypoint: pytest --cov=. --cov-config=.coveragerc
+    depends_on:
+      init:
+        condition: service_completed_successfully
+
+volumes:
+  ollama_data:

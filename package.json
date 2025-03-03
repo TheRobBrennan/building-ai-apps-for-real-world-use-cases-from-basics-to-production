@@ -17,11 +17,11 @@
     "test:workflows:semantic:invalid": "act pull_request -e .github/test-data/pr-events/invalid.json -W .github/workflows/semantic-pr-check.yml",
     "test:workflows:version": "act workflow_dispatch -W .github/workflows/version-bump.yml --container-architecture linux/amd64",
     "test:workflows:merge": "act push -e .github/test-data/pr-events/merge.json -W .github/workflows/main-merge.yml --container-architecture linux/amd64",
-    "docker:build": "cd apps/ai-basics && docker-compose build",
-    "docker:start": "cd apps/ai-basics && docker-compose up app",
-    "docker:test": "cd apps/ai-basics && docker-compose run --rm test",
-    "docker:test:coverage": "cd apps/ai-basics && docker-compose run --rm test-coverage",
-    "docker:clean": "cd apps/ai-basics && docker-compose down --rmi all --volumes --remove-orphans"
+    "docker:build": "cd apps/ai-basics && PYTHONPATH=/app workspaceFolder=/app docker-compose build",
+    "docker:start": "cd apps/ai-basics && PYTHONPATH=/app workspaceFolder=/app docker-compose up app",
+    "docker:test": "cd apps/ai-basics && PYTHONPATH=/app workspaceFolder=/app docker-compose run --rm test",
+    "docker:test:coverage": "cd apps/ai-basics && PYTHONPATH=/app workspaceFolder=/app docker-compose run --rm test-coverage",
+    "docker:clean": "cd apps/ai-basics && PYTHONPATH=/app workspaceFolder=/app docker-compose down --rmi all --volumes --remove-orphans"
   },
   "repository": {
     "type": "git",

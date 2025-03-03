@@ -2,6 +2,7 @@
 omit = 
     */test_*.py
     */__pycache__/*
+    init_ollama.py
 
 [report]
 exclude_lines =
